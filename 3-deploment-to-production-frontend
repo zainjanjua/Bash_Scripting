@@ -1,0 +1,17 @@
+#!/bin/bash
+
+if cd /home/zaintechmate/Documents/project-Chefpost; then
+  if sudo ssh -t -i "ChefPost2.0.0-Prod.pem" ubuntu@ec2-44-213-199-217.compute-1.amazonaws.com
+    cd /var/www/html/chefpost2.0-Frontend/ &&
+    sudo git pull &&
+    npm run build &&
+    pm2 kill &&
+    pm2 start npm --name "Chefpost2.0" -- start
+  '; then
+    echo "Script execution completed successfully."
+  else
+    echo "Error: Unable to execute remote commands." >&2
+  fi
+else
+  echo "Error: Unable to change directory." >&2
+fi
